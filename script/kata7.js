@@ -72,7 +72,7 @@ function callbackAuxFill(currentValue, newValue) {
     currentValue = newValue;
     return currentValue;
 }
-function newFill(array, callback, valor, inicio = 0, fim = array.length) {
+function newFill(array, valor, inicio = 0, fim = array.length, callback = callbackAuxFill) {
     if (inicio < 0) {
         inicio = Math.abs(inicio);
     }
@@ -93,7 +93,7 @@ function callbackAuxIncludes(currentValue, searchElement) {
     }
     return false;
 }
-function newIncludes(array, callback, searchElement, inicio = 0) {
+function newIncludes(array, searchElement, inicio = 0,callback = callbackAuxIncludes) {
     for (let i = inicio; i < array.length; i++) {
         if (callback(array[i], searchElement)) {
             return true;
@@ -109,7 +109,7 @@ function callbackAuxIndexOf(currentValue, searchElement) {
     }
     return false;
 }
-function newIndexOf(array, callback, searchElement, inicio = 0) {
+function newIndexOf(array, searchElement, inicio = 0, callback = callbackAuxIndexOf) {
     if (inicio >= array.length) {
         return -1;
     }
@@ -145,7 +145,7 @@ function newConcat(callback) {
 function callbackAuxJoin(valueCurrent) {
     return '' + valueCurrent;
 }
-function newJoin(array, callback, separator = '') {
+function newJoin(array, separator = '', callback = callbackAuxJoin) {
     let result = '';
 
     for (let i = 0; i < array.length; i++) {
@@ -162,7 +162,7 @@ function newJoin(array, callback, separator = '') {
 function callbackAuxSlice(position, array) {
     return array[position];
 }
-function newSlice(array, callback, inicio = 0, fim = array.length) {
+function newSlice(array, inicio = 0, fim = array.length, callback = callbackAuxSlice) {
     let result = [];
     if (inicio > array.length) {
         return [];
@@ -196,7 +196,7 @@ function newSlice(array, callback, inicio = 0, fim = array.length) {
 function callbackAuxFlat(array) {
     return array.reduce((acc, val) => acc.concat(val), []);
 }
-function newFlat(array, callback, depth = 1) {
+function newFlat(array, depth = 1, callback = callbackAuxFlat) {
     let arrCopy = array.slice()
     for (let i = 0; i < depth; i++) {
         arrCopy = callback(arrCopy);
